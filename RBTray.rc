@@ -118,7 +118,7 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "FileDescription", "RBTray"
+            VALUE "FileDescription", "RBTray (min-only mod)"
             VALUE "FileVersion", "4.14.0.0"
             VALUE "InternalName", "RBTray"
             VALUE "LegalCopyright", "Copyright (c) 1998-2011 Nikolay Redko, J.D. Purcell; Copyright (c) 2015 Benbuck Nason"
