@@ -1,0 +1,29 @@
+name: Build RBTray
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Build x64 Release
+        run: msbuild RBTray.sln /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143
+
+      - name: Collect x64 output
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifact-x64 | Out-Null
+          Get-ChildItem -Recurse -Filter RBTray.exe | ForEach-Object { Copy-Item $_.FullName artifact-x64/ }
+          Get-ChildItem -Recurse -Filter RBHook.dll | ForEach-Object { Copy-Item $_.FullName artifact-x64/ }
+          Get-ChildItem artifact-x64
+
+      - name: Upload x64
+        uses: actions/upload-artifact@v7
+        with:
+          name: RBTray-x64
+          path: artifact-x64/
